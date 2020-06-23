@@ -26,7 +26,7 @@ Figure out what you need to change to give Javascript access to the `h1#header` 
 
 **YOUR NOTES**
 ```
-
+<script src="index.js" defer></script>
 ```
 
 ## Deliverable 2
@@ -35,12 +35,12 @@ Now that you have access to the `h1#header` element, use Javascript to change th
 
 **YOUR NOTES**
 ```
-
+header.style.color = 'red'
 ```
 
 ## Deliverable 3
 
-Now that we've got a beautiful red header, we can show some players on the page. The player data is stored in a variable called `PLAYERS` in the `data.js` file - you can still access that variable in your `index.js` file (see if you can figure out why!).
+Now that we've got a beautiful red header, we can show some players on the page. The player data is stored in a variable called `PLAYERS` in the `data.js` file - you can still access that variable in your `index.js` file (see if you can figure out why!). -> because index.js is defered and data.js is already loaded
 
 First, uncomment the `console.log` under Deliverable 3 in the `index.js` file to see the data in the console. *For each* player in our application, we want to render their information on the DOM inside the `div#player-container` element. 
 
@@ -57,6 +57,30 @@ Create a DOM element that looks like this for each player and append it to the `
 
 **YOUR NOTES**
 ```
+/**ver-1**/
+const playerDiv = document.querySelector(".player-container")
+PLAYERS.forEach(player => 
+  playerDiv.innerHTML += `<div class="player" data-number="${player["number"]}">
+                        <h3>
+                          ${player["name"]} (<em>${player["nickname"]}</em>)
+                        </h3>
+                        <img src="${player["photo"]}" alt="${player["name"]}">
+                        </div>`
+  )
+
+/**ver-2**/
+const playerContainer = document.querySelector(".player-container")
+
+PLAYERS.forEach(player => {
+  const playerDiv = document.createElement("div")
+  playerDiv.setAttribute("class", "player")
+  playerDiv.setAttribute("data-number", `"${player["number"]}"`)
+  playerDiv.innerHTML += `<h3>
+                          ${player["name"]} (<em>${player["nickname"]}</em>)
+                          </h3>
+                          <img src="${player["photo"]}" alt="${player["name"]}">`
+  playerContainer.appendChild(playerDiv)
+})
 
 ```
 
@@ -68,5 +92,6 @@ Hint: You can use `querySelector` with [CSS Attribute Selectors](https://develop
 
 **YOUR NOTES**
 ```
-
+const player = document.querySelector('[data-number="7"]')
+player.remove()
 ```
